@@ -1,0 +1,1 @@
+python: 3.11 would work better, I used 3.12, but there are some issues.
