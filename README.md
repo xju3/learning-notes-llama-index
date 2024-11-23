@@ -1,6 +1,5 @@
 
-## Versions
-- [CN](README_CN.md)
+[readme cn version](README_CN.md)
 
 ## book intro:
 * [building-data-driven-applicatinos-wth-llama-index](https://www.packtpub.com/en-us/product/building-data-driven-applications-with-llamaindex-9781835089507)
