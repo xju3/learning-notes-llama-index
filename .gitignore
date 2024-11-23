@@ -156,6 +156,8 @@ cython_debug/
 
 tmp/*
 
+.DS_Store
+.env
 .idea/
 .idea/
 *.code-workspace
