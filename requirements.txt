@@ -1,0 +1,17 @@
+llama-index-readers-smart-pdf-loader
+llama_index
+llmsherpa
+llama-index-readers-pdf-marker
+llama-index-readers-llama-parse
+llama-parse
+llama-index-storage-index-store-postgres
+llama-index-indices-managed-postgresml
+llama-index-storage-index-store-postgres
+llama-index-storage-docstore-postgres
+llama-index-storage-docstore-mongodb
+llama-index-storage-index-store-mongodb
+llama-index-llms-openai
+llama-index-extractors-entity
+llama-index-extractors-marvin
+unstructured
+lxml
