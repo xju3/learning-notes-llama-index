@@ -19,7 +19,7 @@
 
 ## notifications
 * the recommendions version of python is 3.11, otherwise it might has some incompatible issues.
-* env.py is the basic settings for using local ollama
+* [env.py](env.py) is the basic settings for using local ollama
 * [llama-index-reader-index.ipynb](llama-index-reader-index.ipynb) convered the knowledges of the book chapters from 1 to 5 , including:
     * reader, 
     * splitter, 
