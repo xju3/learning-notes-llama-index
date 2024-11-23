@@ -1,0 +1,9 @@
+OLLAMA_API=http://localhost:11434
+OLLAMA_MODEL=mistral:latest
+MONGO_URI=mongodb://root:root@localhost
+PG_URL=
+PG_HOST=192.168.1.3
+PG_DB=llm
+PG_USER=llm
+PG_PASS=llm
+LLAMA_CLOUD_API_KEY=
