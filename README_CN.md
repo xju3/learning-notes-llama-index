@@ -15,11 +15,11 @@
     LLAMA_CLOUD_API_KEY=
     OPENAI_API_KEY=
 ```
-- 你需要在代码目录下创建.env文件.
+- 你需要在代码目录下手动创建.env文件.
 
 ## 说明
 * 推荐使用Python 3.11版本，其他版本未经测试
-* env.py 是运行本地大模型环境(ollama)的基础设置
+* [env.py](env.py) 是运行本地大模型环境(ollama)的基础设置
 *  [llama-index-reader-index.ipynb](llama-index-reader-index.ipynb)  含盖本书的前1-5所讲述的知识内容,包括
     * reader, 
     * splitter, 
