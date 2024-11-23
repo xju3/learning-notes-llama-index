@@ -1,3 +1,6 @@
+## Versions
+- [En](README_EN.md)
+
 ## 书籍介绍:
 * [building-data-driven-applicatinos-wth-llama-index](https://www.packtpub.com/en-us/product/building-data-driven-applications-with-llamaindex-9781835089507)
 
@@ -8,7 +11,7 @@
     OLLAMA_API=http://localhost:11434
     OLLAMA_MODEL=mistral:latest
     MONGO_URI=mongodb://root:root@localhost
-    PG_URI=postgresql://yourname:password@localhost:5433/db_name
+    PG_URI=postgresql://yourname:password@localhost:5433/db_naEn
     LLAMA_CLOUD_API_KEY=
     OPENAI_API_KEY=
 ```
