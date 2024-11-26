@@ -14,6 +14,7 @@ llama-index-llms-openai
 llama-index-extractors-entity
 llama-index-extractors-marvin
 llama_index_llms_ollama
+llama-index-llms-openai
 llama-index-embeddings-ollama
 unstructured
 lxml
@@ -21,3 +22,4 @@ python-dotenv
 pgsql
 psycopg2-binary
 asyncpg
+mercury

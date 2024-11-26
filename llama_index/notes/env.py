@@ -5,22 +5,26 @@ import os
 from llama_index.core import Settings
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.ollama import OllamaEmbedding
-from dotenv import load_dotenv
+from llama_index.core import Settings
 
 class AppConfig:
     def __init__(self) -> None:
         # config logging
-        config = load_dotenv()
-        logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
-        self.logger = logging.getLogger()
         ollama_host = os.getenv("OLLAMA_API")
         ollama_model = os.getenv("OLLAMA_MODEL")
-        self.logger.debug(f"host: {ollama_host}, mode: {ollama_model}")
-        # set local llm
+        self.pg_uri = os.getenv("PG_URI")
+        self.mongo_uri = os.getenv("MONGO_URI")
+        logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
+        self.logger = logging.getLogger()
+        #
+        self.logger.debug(f"\nhost: {ollama_host}, \nmodel: {ollama_model}")
+        self.logger.debug(f"\n{self.pg_uri} \n{self.mongo_uri}")
+        # # set local llm
         self.llm = Ollama(model=ollama_model, base_url=ollama_host, request_timeout=120)
         self.embedding = OllamaEmbedding(model_name=ollama_model, base_url=ollama_host)
+        Settings.llm = self.llm
+        Settings.embed_model = self.embedding
      
-
     def logger(self):
         return self.logger   
 
@@ -29,3 +33,9 @@ class AppConfig:
 
     def embedding(self):
         return self.embedding
+    
+    def pg_uri(self):
+        return self.pg_uri
+    
+    def mongo_uri(self):
+        return self.mongo_uri
