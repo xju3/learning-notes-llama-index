@@ -6,6 +6,7 @@ from llama_index.core import Settings
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.ollama import OllamaEmbedding
 from llama_index.core import Settings
+from openai import OpenAI
 
 
 class AppConfig:
@@ -21,6 +22,7 @@ class AppConfig:
         self.logger.debug(f"\nhost: {ollama_host}, \nmodel: {ollama_model}")
         self.logger.debug(f"\n{self.pg_uri} \n{self.mongo_uri}")
         # # set local llm
+        # self.llm = OpenAI(base_url=f'{ollama_host}/v1', api_key='ollama')
         self.llm = Ollama(model=ollama_model, base_url=ollama_host, request_timeout=120)
         self.embedding = OllamaEmbedding(model_name=ollama_model, base_url=ollama_host)
         Settings.llm = self.llm
