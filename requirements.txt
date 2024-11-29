@@ -11,6 +11,8 @@ llama-index-storage-index-store-mongodb
 llama-index-vector-stores-postgres
 llama-index-vector-stores-pinecone
 llama-index-vector-stores-weaviate
+llama-index-vector-stores-mongodb
+llama-index-vector-stores-redis
 llama-index-extractors-entity
 llama-index-extractors-marvin
 llama_index_llms_ollama
@@ -26,3 +28,4 @@ pgsql
 psycopg2-binary
 asyncpg
 spacy
+jieba
