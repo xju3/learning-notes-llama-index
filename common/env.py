@@ -12,17 +12,12 @@ from dotenv import load_dotenv
 from llama_index.embeddings.openai import OpenAIEmbedding
 
 
-# Qwen/Qwen2.5-14B-Instruct-GGUF
-
-
-
 class AppConfig:
     def __init__(self) -> None:
+        load_dotenv("../.env")
         # logger
         logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
         self.logger = logging.getLogger()
-        # load .env
-        load_dotenv("/Users/tju/.env")
         # env llm model and host
         host = os.getenv("OLLAMA_HOST")
         model = os.getenv("OLLAMA_MODEL_QWEN")

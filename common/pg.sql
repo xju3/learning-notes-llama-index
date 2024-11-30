@@ -14,7 +14,7 @@ CREATE TABLE qwen.data_vec_store (
 	"text" varchar NOT NULL,
 	"node_id" varchar NOT NULL,
 	metadata_ json NULL,
-	embedding vector(4096) null
+	embedding vector(4096) null --it need to match the dim numbers of your embedding dim
 );
 
 CREATE TABLE qwen.data_idx_store (
