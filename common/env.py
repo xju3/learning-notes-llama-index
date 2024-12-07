@@ -1,6 +1,6 @@
 import logging
 import sys
-sys.path.append("./")
+# sys.path.append("./")
 import os
 from llama_index.core import Settings
 from llama_index.llms.ollama import Ollama
@@ -10,10 +10,7 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 import torch
 from enum import Enum
 
-from llama_index.core import Settings
 from dotenv import load_dotenv
-
-from llama_index.embeddings.openai import OpenAIEmbedding
 
 load_dotenv("../.env")
 

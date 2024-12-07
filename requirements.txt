@@ -1,4 +1,5 @@
 asyncpg
+flask
 jieba
 llama_index
 llama-index-question-gen-guidance
@@ -25,13 +26,16 @@ llama_index_llms_ollama
 llama-index-llms-openai
 llama-index-llms-lmstudio
 llama-index-tools-database
-llama-index-embeddings-ollama
 llmsherpa
 llama-parse
 lxml
+marker-pdf
+pandas
 python-dotenv
 pgsql
 psycopg2-binary
 spacy
+streamlit
 unstructured
-flask
+bs4
+markdown
