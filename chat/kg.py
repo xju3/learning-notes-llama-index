@@ -1,41 +1,30 @@
 import sys
-# sys.path.append("../")
+sys.path.append("../")
 
 from common.env import AppConfig, LocalLLM
-from llama_index.core import Settings
 from neo4j import GraphDatabase
-from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+from bs4 import BeautifulSoup
+from markdown import markdown
 
-username = "neo4j"
-password = "neo4j@sh123"
+import streamlit as st
+
+username = "kg"
+password = "kg@sh123"
 database = "movies"
-uri = "bolt://localhost:7687/movies"
+uri = "bolt://localhost:7687"
 
-driver = GraphDatabase.driver(uri, auth=(username, password))
 
-def get_schema_info():
-    with driver.session() as session:
-        labels = session.run("CALL db.labels()").value()
-        relationships = session.run("CALL db.relationshipTypes()").value()
-        properties = session.run("CALL db.propertyKeys()").value()
+driver = GraphDatabase.driver(uri, database=database, auth=(username, password))
+config = AppConfig(local_llm=LocalLLM.LM_STUDIO)
 
-        return {
-            "labels": labels,
-            "relationships": relationships,
-            "properties": properties
-        }
-    
-# Example function to execute a Cypher query
+# Function to run Cypher query in Neo4j
 def run_cypher_query(cypher_query):
     with driver.session() as session:
         result = session.run(cypher_query)
         return [record.data() for record in result]
-    
-def natural_language_to_cypher_with_schema(natural_query):
-    # Get schema information
-    schema_info = get_schema_info()
 
+# Function to convert natural language to Cypher using LLM
+def natural_language_to_cypher_with_schema(natural_query, schema_info):
     # Format schema into prompt
     schema_prompt = f"""
     The Neo4j database schema includes the following:
@@ -45,35 +34,61 @@ def natural_language_to_cypher_with_schema(natural_query):
 
     Based on this schema, translate the following natural language question into a Cypher query:
     Question: "{natural_query}"
-    Cypher Query:
+    I only need the Cypher Query codes, no explanations
     """
 
-    # Generate the query using the LLM
-    response = Settings.llm(schema_prompt)
-    return response.strip()
+    print(schema_prompt)
+    # config.logger(f"{schema_prompt}")
+    # Generate Cypher query using the LLM
+    response = config.llm.complete(schema_prompt)
+    print(f"resp >>>>>>>>> {response.text}")
+    cypher_query = response.text.replace("```", "").replace("cypher", "").replace(">", "")
+    # md = markdown(response)
+    # query_script = ''.join(BeautifulSoup(md).findAll(text=True))
+    print(f"resp: -->>>>> {cypher_query}")
+    return cypher_query.strip()
+    # config.logger(f"{schema_prompt}")
+    # return "MATCH (m:Movie)-[:DIRECTED]-(p:Person {name: 'Tom Hanks'}) RETURN m.title"
 
-def query_neo4j_with_natural_language(natural_query):
-    # Step 1: Convert natural language to Cypher
-    cypher_query = natural_language_to_cypher_with_schema(natural_query)
-    print(f"Generated Cypher Query: {cypher_query}")
+# Function to get schema info using APOC
+def get_schema_info():
+    with driver.session() as session:
+        labels = session.run("CALL db.labels()").value()
+        relationships = session.run("CALL db.relationshipTypes()").value()
+        properties = session.run("CALL db.propertyKeys()").value()
+    return {
+        "labels": labels,
+        "relationships": relationships,
+        "properties": properties
+    }
 
-    # Step 2: Execute the Cypher query
-    results = run_cypher_query(cypher_query)
+# Streamlit Web Interface
+st.title("Natural Language to Cypher Query")
+st.write("Input a natural language query to interact with the Neo4j graph database.")
 
-    # Step 3: Return the results
-    return results
+# Input field for natural language query
+natural_query = st.text_input("Enter your query:")
 
+# Button to process query
+if st.button("Generate Query and Search"):
+    if natural_query.strip():
+        # Step 1: Get schema information
+        schema_info = get_schema_info()
 
+        # Step 2: Generate Cypher query using LLM
+        with st.spinner("Generating Cypher query..."):
+            cypher_query = natural_language_to_cypher_with_schema(natural_query, schema_info)
+        st.write(f"**Generated Cypher Query:**\n{cypher_query}")
 
-app = Flask(__name__)
+        # Step 3: Execute the Cypher query
+        with st.spinner("Querying database..."):
+            results = run_cypher_query(cypher_query)
 
-@app.route('/query', methods=['POST'])
-def query():
-    data = request.json
-    natural_query = data.get('query')
-    results = query_neo4j_with_natural_language(natural_query)
-    return jsonify(results)
-
-if __name__ == '__main__':
-    config = AppConfig(local_llm=LocalLLM.LM_STUDIO)
-    app.run(debug=True, port=3030)
+        # Step 4: Display results
+        if results:
+            st.write("**Query Results:**")
+            st.json(results)
+        else:
+            st.write("No results found for the query.")
+    else:
+        st.error("Please enter a valid query.")
