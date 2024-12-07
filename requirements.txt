@@ -8,6 +8,7 @@ llama-index-readers-pdf-marker
 llama-index-readers-llama-parse
 llama-index-readers-smart-pdf-loader
 llama-index-indices-managed-postgresml
+llama-index-graph-stores-neo4j
 llama-index-storage-index-store-postgres
 llama-index-storage-docstore-postgres
 llama-index-storage-docstore-mongodb

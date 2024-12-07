@@ -1,10 +1,8 @@
 import sys
 sys.path.append("../")
 
-from common.env import AppConfig, LocalLLM
+from common.llm import LlmConfig, LocalLLM
 from neo4j import GraphDatabase
-from bs4 import BeautifulSoup
-from markdown import markdown
 
 import streamlit as st
 
@@ -15,7 +13,7 @@ uri = "bolt://localhost:7687"
 
 
 driver = GraphDatabase.driver(uri, database=database, auth=(username, password))
-config = AppConfig(local_llm=LocalLLM.LM_STUDIO)
+config = LlmConfig(local_llm=LocalLLM.LM_STUDIO)
 
 # Function to run Cypher query in Neo4j
 def run_cypher_query(cypher_query):
@@ -78,7 +76,7 @@ if st.button("Generate Query and Search"):
         # Step 2: Generate Cypher query using LLM
         with st.spinner("Generating Cypher query..."):
             cypher_query = natural_language_to_cypher_with_schema(natural_query, schema_info)
-        st.write(f"**Generated Cypher Query:**\n{cypher_query}")
+        st.write(f"**Generated Cypher Query:**\r\n{cypher_query}")
 
         # Step 3: Execute the Cypher query
         with st.spinner("Querying database..."):
