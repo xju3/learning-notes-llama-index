@@ -17,7 +17,7 @@ password=os.getenv("NEO4J_PASS")
 url=os.getenv("NEO4J_URI")
 database=os.getenv("NEO4J_DB")
 
-def neo4j_storage_context(config, database=database):
+def get_neo4j_storage_context(config, database=database):
     '''
         connecto to neo4j database.
     '''
@@ -29,7 +29,7 @@ def neo4j_storage_context(config, database=database):
     return StorageContext.from_defaults(graph_store=graph_store)
 
 
-def mongo_storage_context(config):
+def get_mongo_storage_context(config):
     '''
         mongodb
     '''
@@ -37,17 +37,16 @@ def mongo_storage_context(config):
     return StorageContext.from_defaults(docstore=MongoDocumentStore.from_uri(uri=mongo_uri), 
                                         index_store=MongoIndexStore.from_uri(uri=mongo_uri),)
                                     
-def pg_storage_context(config, db_schema, dims):
+def get_pg_storage_context(db_schema, dims):
     '''
         postgres vector db.
     '''
-    config.logger.debug(pg_uri)
     url = make_url(pg_uri)
     pg_doc_store = PostgresDocumentStore.from_uri(uri=pg_uri, 
                                                   table_name='doc_store', 
                                                   schema_name=db_schema)
 
-    pg_idx_store = PostgresIndexStore.from_uri(uri=config.pg_uri, 
+    pg_idx_store = PostgresIndexStore.from_uri(uri=pg_uri, 
                                                table_name='idx_store', 
                                                schema_name=db_schema)
 
